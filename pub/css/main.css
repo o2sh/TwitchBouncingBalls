@@ -1,0 +1,17 @@
+body {
+    font-family: Georgia, Times New Roman, serif;
+    margin: 0;
+    overflow:hidden;
+}
+#left-menu {
+    float: left;
+    width: 15%;
+    position: absolute;
+    z-index:1;
+    height: 100%;
+    background-color: rgba(90, 90, 90, 0.2);
+}
+#render-area {
+    width: 100%;
+    height: 100%;
+}
