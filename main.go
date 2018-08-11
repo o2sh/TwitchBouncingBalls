@@ -9,9 +9,10 @@ import (
 	twitch "github.com/proletariatgames/go-twitch/twitch"
 )
 
+//Output data send to the client
 type Output struct {
 	Total   int
-	Streams []string
+	Streams []twitch.StreamNS
 }
 
 var tpl *template.Template
@@ -34,27 +35,27 @@ func main() {
 }
 
 func idx(w http.ResponseWriter, req *http.Request) {
-	var total int
-	var streams []string
+	total := 20
+	var err error
 	os.Setenv("GO_TWITCH_CLIENTID", "5hk0e3wz856a198lypq5bai57nf13u")
 
 	client := twitch.NewClient(&http.Client{})
 
 	opt := &twitch.ListOptions{
 		Game:  "programming",
-		Limit: 20,
+		Limit: total,
 	}
 
-	sd, e := client.Streams.List(opt)
-	check(e)
-	total = sd.Total
-	for _, stream := range sd.Streams {
-		streams = append(streams, stream.Channel.Status)
-	}
+	sd, err := client.Streams.List(opt)
+	check(err)
+	//total = sd.Total
+	/*for _, stream := range sd.Streams {
+		channels = append(channels, stream.Channel)
+	}*/
 
-	out := Output{total, streams}
+	out := Output{total, sd.Streams}
 
-	err := tpl.ExecuteTemplate(w, "index.html", out)
+	err = tpl.ExecuteTemplate(w, "index.html", out)
 	if err != nil {
 		log.Println(err)
 		http.Error(w, "Internal server error", http.StatusInternalServerError)

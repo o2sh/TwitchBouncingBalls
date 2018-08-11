@@ -1,9 +1,15 @@
 {{template "header"}}
 <div id="wrapper">
     <div id="left-menu">
+        <div id="form">
+            <form action="/submit" method="POST">
+                <input type="text" placeholder="Programming..." required />
+                <input type="image" src="/public/img/refresh.png" id="refresh">
+            </form>
+        </div>
         <div id="stream-list">
             {{ range $value := .Streams }}
-            <li>{{ $value }}</li>
+            <li><span style="color: #af00ff">{{ $value.Channel.Name }}</span>  <span><a href={{ $value.Channel.Url }} target="_blank" rel="noopener">{{ $value.Channel.Status }}</a></span>  <span style="color:#00f9ff">{{ $value.Viewers }}</span> <img src="/public/img/viewer.png" style="vertical-align: middle"></li>
             {{ end }}
         </div>
     </div>
@@ -32,19 +38,27 @@
         })
 
         var circles = [];
+        var preview_images = [];
         var circleRadius = 40;
         var total = `{{.Total}}`;
-        console.log(total)
+        console.log(total);
+
+        {{ range $value := .Streams }}
+            preview_images.push({{ $value.Channel.Logo }});
+        {{ end }}
+
         for (var i = 0; i < total; i++) {
-            var geometry = new THREE.CircleBufferGeometry( circleRadius, 40 );
-            
-            const myUrl = 'https://static-cdn.jtvnw.net/jtv_user_pictures/avoidingthepuddle-profile_image-8656268d189524ec-300x300.jpeg'
-            
+            var geometry = new THREE.CircleBufferGeometry(circleRadius, 40);
+            console.log(preview_images[i]);
+            const myUrl = preview_images[i]
+
             const textureLoader = new THREE.TextureLoader()
             textureLoader.crossOrigin = "Anonymous"
             const myTexture = textureLoader.load(myUrl)
-            
-            var material = new THREE.MeshBasicMaterial({map: myTexture});
+
+            var material = new THREE.MeshBasicMaterial({
+                map: myTexture
+            });
 
             var mesh = new THREE.Mesh(geometry, material)
             circles[i] = new circle(mesh);
