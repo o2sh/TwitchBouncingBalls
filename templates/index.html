@@ -3,7 +3,7 @@
     <div id="left-menu">
         <div id="form">
             <form action="/submit" method="POST">
-                <input type="text" placeholder="Programming..." required />
+                <input type="text" placeholder="Programming..." name="game" required />
                 <input type="image" src="/public/img/refresh.png" id="refresh">
             </form>
         </div>
@@ -41,7 +41,6 @@
         var preview_images = [];
         var circleRadius = 40;
         var total = `{{.Total}}`;
-        console.log(total);
 
         {{ range $value := .Streams }}
             preview_images.push({{ $value.Channel.Logo }});
@@ -49,7 +48,6 @@
 
         for (var i = 0; i < total; i++) {
             var geometry = new THREE.CircleBufferGeometry(circleRadius, 40);
-            console.log(preview_images[i]);
             const myUrl = preview_images[i]
 
             const textureLoader = new THREE.TextureLoader()
