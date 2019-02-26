@@ -1,6 +1,6 @@
 # TwitchBouncingBalls
 
-Project made during the Hackalong Hackathon. It uses the Twitch APIs to display the top 20 live streams for a specific category as bouncing balls 🎈🎈
+It uses the Twitch APIs to display the top 20 live streams for a specific category as bouncing balls 🎈🎈
 
 
 <p align="center">
