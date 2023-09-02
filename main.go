@@ -37,7 +37,7 @@ func main() {
 		port = "8000"
 	}
 
-	os.Setenv("GO_TWITCH_CLIENTID", "5hk0e3wz856a198lypq5bai57nf13u")
+	os.Setenv("GO_TWITCH_CLIENTID", "XXXXXXXXXXXXXXXXXXXX")
 	client = twitch.NewClient(&http.Client{})
 	http.HandleFunc("/", idx)
 	http.HandleFunc("/submit", sub)
